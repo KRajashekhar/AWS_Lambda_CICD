@@ -83,14 +83,14 @@ jobs:
           ENV_VARS="Variables={ENV=${{ env.ENV }},API_KEY=${{ env.API_KEY }},LOG_LEVEL=${{ env.LOG_LEVEL }}}"
           if [ "$FUNCTION_EXISTS" == "false" ]; then
             echo "Creating new Lambda function: $Function_Name..."
-            aws lambda create-function\
+            aws lambda create-function \
                --function-name $Function_Name \
                --runtime python3.11 \
                --role arn:aws:iam::511239432024:role/test_lambda_dev \
                --handler app.lambda_handler \
                --timeout 300 \
                --zip-file fileb://lambda.zip \
-               --environment "$ENV_VARS"
+               --environment "$ENV_VARS" \
                --region $REGION
           else
             echo "Updating existing Lambda function: $Function_Name..."
@@ -100,7 +100,7 @@ jobs:
               --region $REGION
             
             #wait for function code update to complete
-            echo "Waiting for function code update to complete...
+            echo "Waiting for function code update to complete..."
             while true; do
               UPDATE_STATUS=$(aws lambda get-function --function-name $Function_Name --region $REGION --query 'Configuration.LastUpdateStatus' --output text)
               if [ "$UPDATE_STATUS" == "Successful" ]; then
