@@ -80,7 +80,7 @@ jobs:
           # Check if the lambda function exists
           FUNCTION_EXISTS=$(aws lambda get-function --function-name $Function_Name --region $REGION || echo "false")
 
-          ENV_VARS = "Variables={ENV=${{ env.ENV }},API_KEY=${{ env.API_KEY }},LOG_LEVEL=${{ env.LOG_LEVEL }}}"
+          ENV_VARS="Variables={ENV=${{ env.ENV }},API_KEY=${{ env.API_KEY }},LOG_LEVEL=${{ env.LOG_LEVEL }}}"
           if [ "$FUNCTION_EXISTS" == "false" ]; then
             echo "Creating new Lambda function: $Function_Name..."
             aws lambda create-function\
