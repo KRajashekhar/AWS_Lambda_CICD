@@ -128,7 +128,7 @@ jobs:
             # Update function configuration
             aws lambda update-function-configuration \
               --function-name $Function_Name \
-              --environment "$ENV_VARS"
+              --environment "$ENV_VARS" \
               --region $REGION
           fi
 
