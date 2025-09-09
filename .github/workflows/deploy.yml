@@ -51,7 +51,7 @@ jobs:
           else
             echo "ENV=dev" >> $GITHUB_ENV
             echo "API_KEY=dev_api_key" >> $GITHUB_ENV
-            ech "LOG_LEVEL=DEBUG" >> $GITHUB_ENV
+            echo "LOG_LEVEL=DEBUG" >> $GITHUB_ENV
           fi
 
 
