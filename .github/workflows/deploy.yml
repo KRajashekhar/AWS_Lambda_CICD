@@ -73,7 +73,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: 'us-east-1'
         run: |
-          Function_Name = "cicd_lambda_${{github.ref_name}}"
+          Function_Name="cicd_lambda_${{github.ref_name}}"
           REGION="us-east-1"
           echo "Deploying to Lambda function: $Function_Name in region: $REGION..."
 
