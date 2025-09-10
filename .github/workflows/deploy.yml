@@ -56,30 +56,36 @@ jobs:
           fi
 
 
-      # - name: Package Lambda Function
-      #   run: |
-      #     cd lambda_function
-      #     python3.11 -m venv venv
-      #     source venv/bin/activate
-      #     mkdir package
-      #     pip install --no-cache-dir -r requirements.txt -t ./package
-      #     cp app.py ./package/
-      #     cd package
-      #     zip -r ../../lambda.zip .
-      #     cd ../..
-
       - name: Package Lambda Function
         run: |
-          # Clean up any previous build artifacts
-          rm -rf lambda_function/numpy
-          rm -rf lambda_function/app
-          
           cd lambda_function
-          # Install dependencies and your application code directly into the current directory
-          pip install --no-cache-dir -r requirements.txt -t .
-          # Zip all the files and folders in the current directory
-          zip -r ../lambda.zip .
-          cd ..
+ 
+          # Clean up any potential leftover source directories to avoid import errors
+          rm -rf numpy
+          rm -rf build
+          rm -rf dist
+
+          python3.11 -m venv venv
+          source venv/bin/activate
+          mkdir package
+          pip install --no-cache-dir -r requirements.txt -t ./package
+          cp app.py ./package/
+          cd package
+          zip -r ../../lambda.zip .
+          cd ../..
+
+      # - name: Package Lambda Function
+      #   run: |
+      #     # Clean up any previous build artifacts
+      #     rm -rf lambda_function/numpy
+      #     rm -rf lambda_function/app
+          
+      #     cd lambda_function
+      #     # Install dependencies and your application code directly into the current directory
+      #     pip install --no-cache-dir -r requirements.txt -t .
+      #     # Zip all the files and folders in the current directory
+      #     zip -r ../lambda.zip .
+      #     cd ..
 
       - name: Deploy to AWS Lambda
         env:
