@@ -55,46 +55,46 @@ jobs:
             echo "LOG_LEVEL=DEBUG" >> $GITHUB_ENV
           fi
 
-      - name: Package Lambda Function
-        run: |
-          # Create a temporary directory for the final package
-          mkdir -p package_temp
-          cd package_temp
-
-          # Create a virtual environment and install dependencies in it
-          python3.11 -m venv venv
-          source venv/bin/activate
-          pip install --no-cache-dir -r ../lambda_function/requirements.txt
-
-          # Zip the site-packages from the virtual environment
-          # This ensures only installed libraries (like pandas and numpy) are included
-          zip -r ../lambda.zip venv/lib/python3.11/site-packages
-          
-          # Add your application code to the zip file
-          zip -g ../lambda.zip ../lambda_function/app.py
-
-          # Clean up the temporary directory
-          cd ..
-          rm -rf package_temp
-
       # - name: Package Lambda Function
       #   run: |
-      #     cd lambda_function
- 
-      #     # Clean up any potential leftover source directories to avoid import errors
-      #     rm -rf numpy
-      #     rm -rf build
-      #     rm -rf dist
+      #     # Create a temporary directory for the final package
+      #     mkdir -p package_temp
+      #     cd package_temp
 
-
+      #     # Create a virtual environment and install dependencies in it
       #     python3.11 -m venv venv
       #     source venv/bin/activate
-      #     mkdir package
-      #     pip install --no-cache-dir -r requirements.txt -t ./package
-      #     cp app.py ./package/
-      #     cd package
-      #     zip -r ../../lambda.zip .
-      #     cd ../..
+      #     pip install --no-cache-dir -r ../lambda_function/requirements.txt
+
+      #     # Zip the site-packages from the virtual environment
+      #     # This ensures only installed libraries (like pandas and numpy) are included
+      #     zip -r ../lambda.zip venv/lib/python3.11/site-packages
+          
+      #     # Add your application code to the zip file
+      #     zip -g ../lambda.zip ../lambda_function/app.py
+
+      #     # Clean up the temporary directory
+      #     cd ..
+      #     rm -rf package_temp
+
+      - name: Package Lambda Function
+        run: |
+          cd lambda_function
+ 
+          # Clean up any potential leftover source directories to avoid import errors
+          rm -rf numpy
+          rm -rf build
+          rm -rf dist
+
+
+          python3.11 -m venv venv
+          source venv/bin/activate
+          mkdir package
+          pip install --no-cache-dir -r requirements.txt -t ./package
+          cp app.py ./package/
+          cd package
+          zip -r ../../lambda.zip .
+          cd ../..
 
       # - name: Package Lambda Function
       #   run: |
