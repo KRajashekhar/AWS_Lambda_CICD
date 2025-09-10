@@ -70,6 +70,10 @@ jobs:
 
       - name: Package Lambda Function
         run: |
+          # Clean up any previous build artifacts
+          rm -rf lambda_function/numpy
+          rm -rf lambda_function/app
+          
           cd lambda_function
           # Install dependencies and your application code directly into the current directory
           pip install --no-cache-dir -r requirements.txt -t .
